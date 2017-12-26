@@ -5,6 +5,9 @@ import {
 } from 'react-router-dom';
 import logo from './logo.svg';
 import NavBar from './components/NavBar'
+import Home from './components/Home'
+import About from './components/About'
+import Blackjack from './components/Blackjack'
 import './App.css';
 
 class App extends Component {
@@ -14,8 +17,8 @@ class App extends Component {
         <div>
           <NavBar />
           <Route exact path='/' render={Home} />
-          <Route exact path='/actors' render={Blackjack} />
-          <Route exact path='/movies' render={About} />
+          <Route exact path='/blackjack' render={Blackjack} />
+          <Route exact path='/about' render={About} />
         </div>
       </Router>
     );
