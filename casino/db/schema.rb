@@ -10,6 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20171226203511) do
+
+  create_table "games", force: :cascade do |t|
+    t.integer "player_hand_one"
+    t.integer "player_hand_two"
+    t.integer "dealer_hand_one"
+    t.integer "dealer_hand_two"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
