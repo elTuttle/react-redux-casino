@@ -1,8 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { createStore } from 'redux';
+import manageGame from './reducers/manageGame';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export function configureStore(){
+  return createStore(manageGame, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+};
+
+const store = configureStore();
+
+ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 registerServiceWorker();
