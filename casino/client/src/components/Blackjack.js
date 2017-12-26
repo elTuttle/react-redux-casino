@@ -1,11 +1,19 @@
 import React from 'react';
 
-const Blackjack = () => {
-  return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
-  );
+class Blackjack extends React.Component {
+
+  handleClick = () => {
+    
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Blackjack</h1>
+        <button onClick={this.handleClick}>Deal Hand</button>
+      </div>
+    );
+  }
 };
 
 export default Blackjack;
