@@ -20,7 +20,6 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @game.cards = [@game.player_hand_one, @game.player_hand_two, @game.dealer_hand_one, @game.dealer_hand_two]
-    binding.pry
     render json: @game, status: 201
   end
 
@@ -33,7 +32,6 @@ class GamesController < ApplicationController
     end
     @game.cards << new_card
     render json: new_card
-
   end
 
 end
