@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageDiv from './ImageDiv';
+import { connect } from 'react-redux';
 
 class Blackjack extends React.Component {
 
@@ -169,15 +170,25 @@ class Blackjack extends React.Component {
 
   render() {
 
+    //console.log(this.props)
+
     return (
       <div>
         <h1>Blackjack</h1>
         <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
         <ImageDiv imagesArray={this.state.dealerImageDivArray}/>
         <ImageDiv imagesArray={this.state.playerImageDivArray}/>
+
       </div>
     );
   }
 };
 
-export default Blackjack;
+const mapStateToProps = (state) => {
+  return {
+    player: state.player,
+    dealer: state.dealer
+  }
+};
+
+export default connect(mapStateToProps)(Blackjack);

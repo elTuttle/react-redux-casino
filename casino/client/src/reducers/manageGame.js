@@ -1,9 +1,19 @@
-export default function manageGame(state=[],action){
+export default function manageGame(state={
+  player: {
+    hand: [],
+    pngs: [],
+    score: 0
+  },
+  dealer: {
+    hand: [],
+    pngs: [],
+    score: 0
+  }
+},action){
   switch (action.type) {
-    case 'PLAYER_HIT':
-
-    case 'PLAYER_STAY':
-
+    case 'GET_SCORE':
+      debugger;
+      return state
     default:
       return state
   }

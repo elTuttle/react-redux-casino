@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import manageGame from './reducers/manageGame';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -12,5 +13,8 @@ export function configureStore(){
 
 const store = configureStore();
 
-ReactDOM.render(<App store={store}/>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App store={store}/>
+  </Provider>, document.getElementById('root'));
 registerServiceWorker();
