@@ -107,19 +107,22 @@ export default function manageGame(state={
         }
         return Object.assign({}, state, { gameMessage: gameMessage, dealer: updatedDealer})
     case 'STAY':
+      //player stays action
       var dealerStay = state.dealer;
       var gameMessage = ""
-      dealerStay.pngs[1] = getPngName(dealerStay.hand[1]);
-      state.gameWon = true;
-      //console.log(dealerStay)
+      dealerStay.pngs[1] = getPngName(dealerStay.hand[1]); //reveal the dealers second card
+      state.gameWon = true; //the game is over so the player can't hit or stay anymore
       if (dealerStay.score > state.player.score && dealerStay.score <= 21) {
+        //if dealers score is greater than the players and he did not bust, the dealer wins
         gameMessage = `Dealer wins with ${state.dealer.score}!`;
       } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score == state.player.score) {
+        //if the dealer score is greater than 17 and his score equals the players, the game is a tie
         gameMessage = "Tie!"
       }else if (dealerStay.score >= 17 && dealerStay.score < state.player.score){
+        //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
         gameMessage = "You win!"
       }
-      return Object.assign({}, state, { gameMessage: gameMessage, dealer: dealerStay})
+      return Object.assign({}, state, { gameMessage: gameMessage, dealer: dealerStay}) //return state with updated dealer and message
     case 'CHECK_FOR_WIN':
       //Checking for win
       var message = ""
@@ -137,10 +140,9 @@ export default function manageGame(state={
         message = "You Win!"
       }
       //console.log(message)
-      //return state with updated message
-      return Object.assign({}, state, { gameMessage: message})
+      return Object.assign({}, state, { gameMessage: message}) //return state with updated message
     default:
-      return state
+      return state //if no action return state
   }
 }
 
