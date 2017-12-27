@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageDiv from './ImageDiv';
 import HitAndStayButtons from './HitAndStayButtons'
+import GameOverMessage from './GameOverMessage'
 import { connect } from 'react-redux';
 import { newGame } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
@@ -49,7 +50,7 @@ class Blackjack extends React.Component {
         <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
         <ImageDiv imagesArray={this.props.dealer.pngs}/>
         <ImageDiv imagesArray={this.props.player.pngs}/>
-        <h1>{this.props.message}</h1>
+        <h1><GameOverMessage message={this.props.message} /></h1>
         <h1>Score: {this.props.player.score}</h1>
         <HitAndStayButtons gameId={this.state.gameId}/>
       </div>

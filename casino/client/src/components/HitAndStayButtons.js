@@ -19,7 +19,7 @@ class HitAndStayButtons extends React.Component{
   }
 
   handleDealerHit = () => {
-    if (this.props.dealerScore < 17 && this.props.dealerScore < this.props.playerScore) {
+    if (this.props.dealerScore < 17 && this.props.dealerScore <= this.props.playerScore) {
       fetch('/games/' + this.props.gameId + '/hit')
       .then(results => {
         return results.json();
@@ -27,6 +27,7 @@ class HitAndStayButtons extends React.Component{
         this.props.dealerHit(data);
       })
     }
+    this.props.checkForWin();
   }
 
   render() {
