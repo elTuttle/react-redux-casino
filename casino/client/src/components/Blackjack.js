@@ -11,7 +11,8 @@ class Blackjack extends React.Component {
     super();
 
     this.state = {
-      buttonText: 'Play'
+      buttonText: 'Play',
+      gameId: null
     }
 
   }
@@ -22,7 +23,8 @@ class Blackjack extends React.Component {
       return results.json();
     }).then(data => {
       this.setState({
-        buttonText: "New Game"
+        buttonText: "New Game",
+        gameId: data.id
       })
       const game = {
         playerImage: [this.translateIntToCards(data.player_hand_one),this.translateIntToCards(data.player_hand_two)],
@@ -169,7 +171,7 @@ class Blackjack extends React.Component {
 
   render() {
 
-    //console.log(this.props)
+    console.log(this.state)
     //debugger;
 
     return (
@@ -179,7 +181,7 @@ class Blackjack extends React.Component {
         <ImageDiv imagesArray={this.props.dealer.pngs}/>
         <ImageDiv imagesArray={this.props.player.pngs}/>
         <h1>Score: {this.props.player.score}</h1>
-        <HitAndStayButtons />
+        <HitAndStayButtons gameId={this.state.gameId}/>
       </div>
     );
   }

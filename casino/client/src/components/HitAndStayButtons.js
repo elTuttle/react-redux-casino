@@ -4,11 +4,16 @@ import { connect } from 'react-redux';
 class HitAndStayButtons extends React.Component{
 
   handleHit = () => {
-    console.log("hit")
+    fetch('/games/' + this.props.gameId + '/hit')
+    .then(results => {
+      return results.json();
+    }).then(data => {
+      console.log(data)
+    })
   }
 
   handleStay = () => {
-    console.log("stay")
+    console.log(this.props.gameId)
   }
 
   render() {
