@@ -79,22 +79,15 @@ export default function manageGame(state={
       }
       return Object.assign({}, state, { player: updatedPlayer})
     case 'STAY':
-      const dealerStay = state.dealer;
+      var dealerStay = state.dealer;
       dealerStay.pngs[1] = getPngName(dealerStay.hand[1]);
       state.gameWon = true;
-      while (dealerStay.score < 17) {
-        fetch('/games/' + this.props.gameId + '/hit')
-        .then(results => {
-          return results.json();
-        }).then(data => {
-          debugger;
-        })
-      }
+      console.log(dealerStay)
       if (dealerStay.score > state.player.score && dealerStay.score <= 21) {
         state.gameMessage = "Dealer Wins!";
-      } else if (dealerStay.score === state.player.score) {
+      } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score == state.player.score) {
         state.gameMessage = "Tie!"
-      }else {
+      }else if (dealerStay.score >= 17 && dealerStay.score < state.player.score){
         state.gameMessage = "You win!"
       }
       return Object.assign({}, state, { dealer: dealerStay})

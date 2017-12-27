@@ -15,7 +15,7 @@ class HitAndStayButtons extends React.Component{
   }
 
   handleStay = () => {
-    this.props.stay();
+    this.props.stay(this.props.gameId);
   }
 
   render() {

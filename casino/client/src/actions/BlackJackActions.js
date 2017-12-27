@@ -12,8 +12,9 @@ export const playerHit = (card) => {
   }
 }
 
-export const stay = () => {
+export const stay = (idValue) => {
   return{
-    type: 'STAY'
+    type: 'STAY',
+    id: idValue
   }
 }
