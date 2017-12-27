@@ -1,6 +1,7 @@
 export default function manageGame(state={
   gameWon: false,
   gameStart: false,
+  gameMessage: "",
   player: {
     hand: [],
     pngs: ['red_back','red_back'],
@@ -45,6 +46,10 @@ export default function manageGame(state={
           score: dealerScore
         }
       }
+      if (newState.player.score == 21) {
+        newState.gameMessage = "21!"
+        newState.gameWon = true
+      }
       return newState
 
     case 'PLAYER_HIT':
@@ -52,7 +57,47 @@ export default function manageGame(state={
       updatedPlayer.hand.push(action.cardValue)
       updatedPlayer.pngs.push(getPngName(action.cardValue))
       updatedPlayer.score += getScoreValue(action.cardValue)
+
+      if (updatedPlayer.score > 21) {
+        if (updatedPlayer.hand.includes(0) || updatedPlayer.hand.includes(13) || updatedPlayer.hand.includes(26) || updatedPlayer.hand.includes(39)) {
+          const hand = []
+          updatedPlayer.hand.forEach(function(card) {
+            if (card === 0 || card === 13 || card === 26 || card === 39) {
+              card = 53;
+              updatedPlayer.score -= 10;
+            }
+            hand.push(card)
+          })
+          updatedPlayer.hand = hand
+        } else {
+          state.gameMessage = "Bust!"
+          state.gameWon = true
+        }
+      } else if (updatedPlayer.score == 21) {
+        state.gameMessage = "21!"
+        state.gameWon = true
+      }
       return Object.assign({}, state, { player: updatedPlayer})
+    case 'STAY':
+      const dealerStay = state.dealer;
+      dealerStay.pngs[1] = getPngName(dealerStay.hand[1]);
+      state.gameWon = true;
+      while (dealerStay.score < 17) {
+        fetch('/games/' + this.props.gameId + '/hit')
+        .then(results => {
+          return results.json();
+        }).then(data => {
+          debugger;
+        })
+      }
+      if (dealerStay.score > state.player.score && dealerStay.score <= 21) {
+        state.gameMessage = "Dealer Wins!";
+      } else if (dealerStay.score === state.player.score) {
+        state.gameMessage = "Tie!"
+      }else {
+        state.gameMessage = "You win!"
+      }
+      return Object.assign({}, state, { dealer: dealerStay})
     default:
       return state
   }
@@ -123,6 +168,8 @@ function getScoreValue(cardNumber) {
     case 51:
     case 52:
       return 10;
+    case 53:
+      return 1;
     }
 }
 

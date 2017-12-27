@@ -41,7 +41,7 @@ class Blackjack extends React.Component {
 
   render() {
 
-    console.log(this.props.player)
+    console.log(this.props.dealer)
 
     return (
       <div>
@@ -49,6 +49,7 @@ class Blackjack extends React.Component {
         <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
         <ImageDiv imagesArray={this.props.dealer.pngs}/>
         <ImageDiv imagesArray={this.props.player.pngs}/>
+        <h1>{this.props.message}</h1>
         <h1>Score: {this.props.player.score}</h1>
         <HitAndStayButtons gameId={this.state.gameId}/>
       </div>
@@ -57,12 +58,16 @@ class Blackjack extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.player)
+  console.log(state.dealer)
   return {
     player: state.player,
     player_pngs: state.player.pngs,
     player_score: state.player.score,
-    dealer: state.dealer
+    dealer: state.dealer,
+    dealer_pngs: state.dealer.pngs,
+    dealer_png_one: state.dealer.pngs[1],
+    dealer_score: state.dealer.score,
+    message: state.gameMessage
   }
 };
 

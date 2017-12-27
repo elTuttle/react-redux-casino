@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { playerHit } from '../actions/BlackJackActions'
+import { playerHit, stay } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
 
 class HitAndStayButtons extends React.Component{
@@ -15,7 +15,7 @@ class HitAndStayButtons extends React.Component{
   }
 
   handleStay = () => {
-    console.log(this.props.gameId)
+    this.props.stay();
   }
 
   render() {
@@ -44,8 +44,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    playerHit: playerHit
-
+    playerHit: playerHit,
+    stay: stay
   }, dispatch);
 }
 
