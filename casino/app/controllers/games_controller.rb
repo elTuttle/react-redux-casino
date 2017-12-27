@@ -30,10 +30,10 @@ class GamesController < ApplicationController
   def hit
     @game = Game.find(params[:id])
     new_card = rand(52).to_i
-    binding.pry
     while @game.current_cards.include?(new_card)
       new_card = rand(52).to_i
     end
+    @game.cards.build(value: new_card)
     render json: new_card
   end
 
