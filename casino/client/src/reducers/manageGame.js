@@ -111,7 +111,7 @@ export default function manageGame(state={
       var gameMessage = ""
       dealerStay.pngs[1] = getPngName(dealerStay.hand[1]);
       state.gameWon = true;
-      console.log(dealerStay)
+      //console.log(dealerStay)
       if (dealerStay.score > state.player.score && dealerStay.score <= 21) {
         gameMessage = `Dealer wins with ${state.dealer.score}!`;
       } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score == state.player.score) {
@@ -121,17 +121,23 @@ export default function manageGame(state={
       }
       return Object.assign({}, state, { gameMessage: gameMessage, dealer: dealerStay})
     case 'CHECK_FOR_WIN':
+      //Checking for win
       var message = ""
       if (state.dealer.score > state.player.score && state.dealer.score <= 21) {
+        //if dealers score is greater than the players and he did not bust, the dealer wins
         message = `Dealer wins with ${state.dealer.score}!`
       } else if (state.dealer.score >= 17 && state.dealer.score == state.player.score) {
+        //if the dealer score is greater than 17 and his score equals the players, the game is a tie
         message = "Tie!"
       } else if (state.dealer.score > 21) {
+        //if the dealers score is greater than 21, he busts
         message = "Dealer Busts!"
       } else if (state.dealer.score >= 17 && state.dealer.score < 21 && state.dealer.score < state.player.score) {
+        //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
         message = "You Win!"
       }
-      console.log(message)
+      //console.log(message)
+      //return state with updated message
       return Object.assign({}, state, { gameMessage: message})
     default:
       return state
