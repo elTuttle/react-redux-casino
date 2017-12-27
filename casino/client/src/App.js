@@ -14,10 +14,11 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <NavBar />
+          <NavBar /> //Navbar for top of page
           <Route exact path='/' render={Home} />
           <Route exact path='/blackjack' component={Blackjack} store={this.props.store}/>
           <Route exact path='/about' render={About} />
+          //Routes necessary for application
         </div>
       </Router>
     );

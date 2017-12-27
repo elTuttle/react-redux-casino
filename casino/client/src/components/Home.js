@@ -1,7 +1,7 @@
 import React from 'react';
 import Center from 'react-center';
 
-const Home = () => {
+const Home = () => { //Home page
   return (
     <div>
       <Center>
