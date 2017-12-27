@@ -12,6 +12,11 @@ class GamesController < ApplicationController
 
     @game = Game.new(player_hand_one: player_hand[0], player_hand_two: player_hand[1], dealer_hand_one: dealer_hand[0], dealer_hand_two: dealer_hand[1])
 
+    @game.cards.build(value: player_hand[0])
+    @game.cards.build(value: player_hand[1])
+    @game.cards.build(value: dealer_hand[0])
+    @game.cards.build(value: dealer_hand[1])
+
     if @game.save
       redirect_to game_path(@game)
     end
@@ -19,7 +24,6 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @game.cards = [@game.player_hand_one, @game.player_hand_two, @game.dealer_hand_one, @game.dealer_hand_two]
     render json: @game, status: 201
   end
 
@@ -27,10 +31,9 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     new_card = rand(52).to_i
     binding.pry
-    while @game.cards.include?(new_card)
+    while @game.current_cards.include?(new_card)
       new_card = rand(52).to_i
     end
-    @game.cards << new_card
     render json: new_card
   end
 
