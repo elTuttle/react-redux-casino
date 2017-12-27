@@ -1,4 +1,6 @@
 export default function manageGame(state={
+  gameWon: false,
+  gameStart: false,
   player: {
     hand: [],
     pngs: ['red_back','red_back'],
@@ -330,6 +332,8 @@ export default function manageGame(state={
     //debugger;
 
       const newState = {
+        gameWon: false,
+        gameStart: true,
         player: {
           hand: [action.game.player.cards[0], action.game.player.cards[1]],
           pngs: [action.game.playerImage[0], action.game.playerImage[1]],

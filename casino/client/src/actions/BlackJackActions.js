@@ -4,9 +4,3 @@ export const newGame = (game) => {
     game
   }
 }
-
-export const getScore = () => {
-  return {
-    type: 'GET_SCORE'
-  }
-}

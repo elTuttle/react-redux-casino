@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageDiv from './ImageDiv';
+import HitAndStayButtons from './HitAndStayButtons'
 import { connect } from 'react-redux';
 import { newGame, getScore } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
@@ -10,15 +11,7 @@ class Blackjack extends React.Component {
     super();
 
     this.state = {
-      buttonText: 'Play',
-      playerImageDivArray: ["red_back","red_back"],
-      dealerImageDivArray: ["red_back","red_back"],
-      player: {
-        cards: []
-      },
-      dealer: {
-        cards: []
-      }
+      buttonText: 'Play'
     }
 
   }
@@ -28,6 +21,9 @@ class Blackjack extends React.Component {
     .then(results => {
       return results.json();
     }).then(data => {
+      this.setState({
+        buttonText: "New Game"
+      })
       const game = {
         playerImage: [this.translateIntToCards(data.player_hand_one),this.translateIntToCards(data.player_hand_two)],
         dealerImage: [this.translateIntToCards(data.dealer_hand_one),"red_back"],
@@ -183,6 +179,7 @@ class Blackjack extends React.Component {
         <ImageDiv imagesArray={this.props.dealer.pngs}/>
         <ImageDiv imagesArray={this.props.player.pngs}/>
         <h1>Score: {this.props.player.score}</h1>
+        <HitAndStayButtons />
       </div>
     );
   }
