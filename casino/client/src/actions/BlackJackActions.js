@@ -12,9 +12,15 @@ export const playerHit = (card) => {
   }
 }
 
+export const dealerHit = (card) => {
+  return{
+    type: 'DEALER_HIT',
+    cardValue: card
+  }
+}
+
 export const stay = (idValue) => {
   return{
-    type: 'STAY',
-    id: idValue
+    type: 'STAY'
   }
 }

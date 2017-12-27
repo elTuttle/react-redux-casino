@@ -78,6 +78,32 @@ export default function manageGame(state={
         state.gameWon = true
       }
       return Object.assign({}, state, { player: updatedPlayer})
+    case 'DEALER_HIT':
+        const updatedDealer = state.dealer
+        updatedDealer.hand.push(action.cardValue)
+        updatedDealer.pngs.push(getPngName(action.cardValue))
+        updatedDealer.score += getScoreValue(action.cardValue)
+
+        if (updatedDealer.score > 21) {
+          if (updatedDealer.hand.includes(0) || updatedDealer.hand.includes(13) || updatedDealer.hand.includes(26) || updatedDealer.hand.includes(39)) {
+            const dealerHand = []
+            updatedDealer.hand.forEach(function(card) {
+              if (card === 0 || card === 13 || card === 26 || card === 39) {
+                card = 53;
+                updatedDealer.score -= 10;
+              }
+              dealerHand.push(card)
+            })
+            updatedDealer.hand = dealerHand
+          } else {
+            state.gameMessage = "Dealer Busts! You Win!"
+          }
+        } else if (updatedDealer.score == 21) {
+          state.gameMessage = "Dealer Wins!"
+        } else if (updatedDealer.score >= 17 && updatedDealer.score < 21 && updatedDealer.score < state.player.score) {
+          state.gameMessage = "You Win!"
+        }
+        return Object.assign({}, state, { dealer: updatedDealer})
     case 'STAY':
       var dealerStay = state.dealer;
       dealerStay.pngs[1] = getPngName(dealerStay.hand[1]);
