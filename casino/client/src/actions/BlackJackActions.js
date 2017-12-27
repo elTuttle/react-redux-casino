@@ -5,9 +5,10 @@ export const newGame = (game) => {
   }
 }
 
-export const hit = () => {
+export const playerHit = (card) => {
   return{
-    type: 'HIT'
+    type: 'PLAYER_HIT',
+    cardValue: card
   }
 }
 
