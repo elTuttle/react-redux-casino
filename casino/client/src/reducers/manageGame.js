@@ -15,8 +15,7 @@ export default function manageGame(state={
 },action){
   switch (action.type) {
     case 'NEW_GAME':
-      //debugger;
-
+    
       var playerScore = 0
       var dealerScore = 0
 
