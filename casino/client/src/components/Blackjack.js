@@ -1,6 +1,8 @@
 import React from 'react';
 import ImageDiv from './ImageDiv';
 import { connect } from 'react-redux';
+import { newGame, getScore } from '../actions/BlackJackActions'
+import { bindActionCreators } from 'redux';
 
 class Blackjack extends React.Component {
 
@@ -26,19 +28,20 @@ class Blackjack extends React.Component {
     .then(results => {
       return results.json();
     }).then(data => {
-      this.setState({
-        buttonText: 'New Game',
-        playerImageDivArray: [this.translateIntToCards(data.player_hand_one),this.translateIntToCards(data.player_hand_two)],
-        dealerImageDivArray: [this.translateIntToCards(data.dealer_hand_one),"red_back"],
+      const game = {
+        playerImage: [this.translateIntToCards(data.player_hand_one),this.translateIntToCards(data.player_hand_two)],
+        dealerImage: [this.translateIntToCards(data.dealer_hand_one),"red_back"],
         player: {
           cards: [data.player_hand_one, data.player_hand_two]
         },
         dealer: {
           cards: [data.dealer_hand_one, data.dealer_hand_two]
         }
-      })
+      }
+      this.props.newGame(game)
     })
-  }
+
+    }
 
   translateIntToCards = (cardInt) => {
     if (cardInt < 13) {
@@ -171,14 +174,15 @@ class Blackjack extends React.Component {
   render() {
 
     //console.log(this.props)
+    //debugger;
 
     return (
       <div>
         <h1>Blackjack</h1>
         <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
-        <ImageDiv imagesArray={this.state.dealerImageDivArray}/>
-        <ImageDiv imagesArray={this.state.playerImageDivArray}/>
-
+        <ImageDiv imagesArray={this.props.dealer.pngs}/>
+        <ImageDiv imagesArray={this.props.player.pngs}/>
+        <h1>Score: {this.props.player.score}</h1>
       </div>
     );
   }
@@ -191,4 +195,11 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps)(Blackjack);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    newGame: newGame
+
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blackjack);
