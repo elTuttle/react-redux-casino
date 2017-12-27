@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const link = {
+const link = { //navbar css
   height: '130px',
   width: '100px',
   padding: '10px',
@@ -12,7 +12,7 @@ const link = {
 }
 
 const NavBar = () => {
-  return (
+  return ( //navbar routes and css
     <div className="navbar">
       <NavLink
       to="/"

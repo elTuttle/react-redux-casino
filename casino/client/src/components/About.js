@@ -1,7 +1,7 @@
 import React from 'react';
 import Center from 'react-center'
 
-const About = () => {
+const About = () => { //About page
   return (
     <div>
       <Center>
