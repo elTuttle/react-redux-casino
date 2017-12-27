@@ -32,7 +32,7 @@ export default function manageGame(state={
       dealerScore += getScoreValue(dealerCardOne)
       dealerScore += getScoreValue(dealerCardTwo)
 
-      const newState = {
+      const newState = { //starting state for new game
         gameWon: false,
         gameStart: true,
         player: {
@@ -46,20 +46,17 @@ export default function manageGame(state={
           score: dealerScore
         }
       }
-      if (newState.player.score == 21) {
-        newState.gameMessage = "21!"
-        newState.gameWon = true
-      }
-      return newState
+      return newState //return new state
 
-    case 'PLAYER_HIT':
+    case 'PLAYER_HIT': //player hit action
       const updatedPlayer = state.player
-      updatedPlayer.hand.push(action.cardValue)
-      updatedPlayer.pngs.push(getPngName(action.cardValue))
-      updatedPlayer.score += getScoreValue(action.cardValue)
+      updatedPlayer.hand.push(action.cardValue) //add new card value to hand
+      updatedPlayer.pngs.push(getPngName(action.cardValue)) //add new png to png array
+      updatedPlayer.score += getScoreValue(action.cardValue) //update player score
 
-      if (updatedPlayer.score > 21) {
+      if (updatedPlayer.score > 21) { // if the player score is greater than 21
         if (updatedPlayer.hand.includes(0) || updatedPlayer.hand.includes(13) || updatedPlayer.hand.includes(26) || updatedPlayer.hand.includes(39)) {
+          //if he has an ace, and his score is over 21, change it from 11 points to 1
           const hand = []
           updatedPlayer.hand.forEach(function(card) {
             if (card === 0 || card === 13 || card === 26 || card === 39) {
@@ -69,25 +66,26 @@ export default function manageGame(state={
             hand.push(card)
           })
           updatedPlayer.hand = hand
-        } else {
+        } else { //if no aces and over 21, the player busts
           state.gameMessage = "Bust!"
           state.gameWon = true
         }
-      } else if (updatedPlayer.score == 21) {
+      } else if (updatedPlayer.score == 21) { //if the player get's 21, he wins
         state.gameMessage = "21!"
         state.gameWon = true
       }
-      return Object.assign({}, state, { player: updatedPlayer})
-    case 'DEALER_HIT':
+      return Object.assign({}, state, { player: updatedPlayer}) //return state with updated Player
+    case 'DEALER_HIT': //Dealer hits action
         const updatedDealer = state.dealer
-        updatedDealer.hand.push(action.cardValue)
-        updatedDealer.pngs.push(getPngName(action.cardValue))
-        updatedDealer.score += getScoreValue(action.cardValue)
+        updatedDealer.hand.push(action.cardValue) //add new card to hand
+        updatedDealer.pngs.push(getPngName(action.cardValue)) //add new png to png array
+        updatedDealer.score += getScoreValue(action.cardValue) //add new points
 
         var gameMessage = ""
 
-        if (updatedDealer.score > 21) {
+        if (updatedDealer.score > 21) { // if the dealer score is greater than 21
           if (updatedDealer.hand.includes(0) || updatedDealer.hand.includes(13) || updatedDealer.hand.includes(26) || updatedDealer.hand.includes(39)) {
+            //if he has an ace, and his score is over 21, change it from 11 points to 1
             const dealerHand = []
             updatedDealer.hand.forEach(function(card) {
               if (card === 0 || card === 13 || card === 26 || card === 39) {
@@ -97,17 +95,17 @@ export default function manageGame(state={
               dealerHand.push(card)
             })
             updatedDealer.hand = dealerHand
-          } else {
+          } else {   //if no aces and over 21, the dealer busts
             gameMessage = "Dealer Busts! You Win!"
           }
-        } else if (updatedDealer.score == 21) {
+        } else if (updatedDealer.score == 21) { //if the dealer gets 21 he wins
           gameMessage = `Dealer wins with ${state.dealer.score}!`
         } else if (updatedDealer.score >= 17 && updatedDealer.score < 21 && updatedDealer.score < state.player.score) {
+          //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
           gameMessage = "You Win!"
         }
-        return Object.assign({}, state, { gameMessage: gameMessage, dealer: updatedDealer})
-    case 'STAY':
-      //player stays action
+        return Object.assign({}, state, { gameMessage: gameMessage, dealer: updatedDealer}) //return state with updated dealer and message
+    case 'STAY': //player stays action
       var dealerStay = state.dealer;
       var gameMessage = ""
       dealerStay.pngs[1] = getPngName(dealerStay.hand[1]); //reveal the dealers second card
@@ -123,8 +121,7 @@ export default function manageGame(state={
         gameMessage = "You win!"
       }
       return Object.assign({}, state, { gameMessage: gameMessage, dealer: dealerStay}) //return state with updated dealer and message
-    case 'CHECK_FOR_WIN':
-      //Checking for win
+    case 'CHECK_FOR_WIN': //Checking for win action
       var message = ""
       if (state.dealer.score > state.player.score && state.dealer.score <= 21) {
         //if dealers score is greater than the players and he did not bust, the dealer wins
@@ -146,7 +143,7 @@ export default function manageGame(state={
   }
 }
 
-function getScoreValue(cardNumber) {
+function getScoreValue(cardNumber) { //gets score value off cards position in deck
   switch (cardNumber) {
     case 0:
     case 13:
@@ -216,7 +213,7 @@ function getScoreValue(cardNumber) {
     }
 }
 
-function getPngName(cardInt) {
+function getPngName(cardInt) { //gets png value off cards position in deck
   if (cardInt < 13) {
     switch (cardInt) {
       case 0:
