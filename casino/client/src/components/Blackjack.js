@@ -38,11 +38,10 @@ class Blackjack extends React.Component {
     })
 
     }
-    
+
   render() {
 
-    console.log(this.state)
-    //debugger;
+    console.log(this.props.player)
 
     return (
       <div>
@@ -58,8 +57,11 @@ class Blackjack extends React.Component {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state.player)
   return {
     player: state.player,
+    player_pngs: state.player.pngs,
+    player_score: state.player.score,
     dealer: state.dealer
   }
 };

@@ -30,7 +30,6 @@ export default function manageGame(state={
 
       dealerScore += getScoreValue(dealerCardOne)
       dealerScore += getScoreValue(dealerCardTwo)
-    debugger;
 
       const newState = {
         gameWon: false,
@@ -42,15 +41,18 @@ export default function manageGame(state={
         },
         dealer: {
           hand: [action.game.dealer.cards[0], action.game.dealer.cards[1]],
-          pngs: [getPngName(dealerCardOne), getPngName(dealerCardTwo)],
+          pngs: [getPngName(dealerCardOne), 'red_back'],
           score: dealerScore
         }
       }
       return newState
 
     case 'PLAYER_HIT':
-      debugger;
-      return null
+      const updatedPlayer = state.player
+      updatedPlayer.hand.push(action.cardValue)
+      updatedPlayer.pngs.push(getPngName(action.cardValue))
+      updatedPlayer.score += getScoreValue(action.cardValue)
+      return Object.assign({}, state, { player: updatedPlayer})
     default:
       return state
   }
