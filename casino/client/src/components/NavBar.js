@@ -2,9 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const link = {
+  height: '130px',
   width: '100px',
-  padding: '12px',
-  margin: '0 6px 6px',
+  padding: '10px',
+  margin: '0px 3px 3px',
   background: 'blue',
   textDecoration: 'none',
   color: 'white',
@@ -19,6 +20,9 @@ const NavBar = () => {
       style={link}
       activeStyle={{
         background: 'darkblue'
+      }}
+      hover={{
+        background: 'red'
       }}
       >Home</NavLink>
 
