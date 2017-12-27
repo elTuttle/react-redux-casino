@@ -40,8 +40,8 @@ class HitAndStayButtons extends React.Component{
     if(this.props.gameStart === true && this.props.gameWon === false) { //if the game has started but is not over, display buttons
       return (
         <div>
-          <button onClick={this.handleHit} width="50" height="50">Hit</button> //hit button
-          <button onClick={this.handleStay} width="50" height="50">Stay</button> //stay button
+          <button onClick={this.handleHit} width="50" height="50">Hit</button>
+          <button onClick={this.handleStay} width="50" height="50">Stay</button>
         </div>
       )
     } else { //display nothing if game hasn't started or is already won

@@ -15,7 +15,7 @@ export function configureStore(){
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}> //adds provider to application
+  <Provider store={store}> 
     <App store={store}/>
   </Provider>, document.getElementById('root'));
 registerServiceWorker();

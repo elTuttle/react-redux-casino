@@ -46,25 +46,25 @@ class Blackjack extends React.Component {
     return (
       <div>
         <Center>
-          <h1>Blackjack</h1> //Title
+          <h1>Blackjack</h1>
         </Center>
         <Center>
-          <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br /> //play button
+          <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
         </Center>
         <Center>
-          <ImageDiv imagesArray={this.props.dealer.pngs}/>//dealers pngs
+          <ImageDiv imagesArray={this.props.dealer.pngs}/>
         </Center>
         <Center>
-          <ImageDiv imagesArray={this.props.player.pngs}/>//players pngs
+          <ImageDiv imagesArray={this.props.player.pngs}/>
         </Center>
         <Center>
-          <GameOverMessage message={this.props.message} />//message container
+          <GameOverMessage message={this.props.message} />
         </Center>
         <Center>
-          <h1>Score: {this.props.player.score}</h1>//score div
+          <h1>Score: {this.props.player.score}</h1>
         </Center>
         <Center>
-          <HitAndStayButtons gameId={this.state.gameId}/>//Hit and Stay Component
+          <HitAndStayButtons gameId={this.state.gameId}/>
         </Center>
       </div>
     );

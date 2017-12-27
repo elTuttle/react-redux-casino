@@ -8,7 +8,7 @@ const ImageDiv = (props) => { //div of pngs to be displayed on blackjack page
 
   return (
     <div>
-      {images}//display each img tag in images variable
+      {images}
     </div>
   );
 };
