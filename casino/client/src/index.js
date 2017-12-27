@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Center from 'react-center'
 import './index.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';

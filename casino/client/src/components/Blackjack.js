@@ -2,6 +2,7 @@ import React from 'react';
 import ImageDiv from './ImageDiv';
 import HitAndStayButtons from './HitAndStayButtons'
 import GameOverMessage from './GameOverMessage'
+import Center from 'react-center'
 import { connect } from 'react-redux';
 import { newGame } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
@@ -46,13 +47,27 @@ class Blackjack extends React.Component {
 
     return (
       <div>
-        <h1>Blackjack</h1>
-        <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
-        <ImageDiv imagesArray={this.props.dealer.pngs}/>
-        <ImageDiv imagesArray={this.props.player.pngs}/>
-        <h1><GameOverMessage message={this.props.message} /></h1>
-        <h1>Score: {this.props.player.score}</h1>
-        <HitAndStayButtons gameId={this.state.gameId}/>
+        <Center>
+          <h1>Blackjack</h1>
+        </Center>
+        <Center>
+          <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
+        </Center>
+        <Center>
+          <ImageDiv imagesArray={this.props.dealer.pngs}/>
+        </Center>
+        <Center>
+          <ImageDiv imagesArray={this.props.player.pngs}/>
+        </Center>
+        <Center>
+          <GameOverMessage message={this.props.message} />
+        </Center>
+        <Center>
+          <h1>Score: {this.props.player.score}</h1>
+        </Center>
+        <Center>
+          <HitAndStayButtons gameId={this.state.gameId}/>
+        </Center>
       </div>
     );
   }
