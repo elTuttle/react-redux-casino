@@ -99,7 +99,7 @@ export default function manageGame(state={
             state.gameMessage = "Dealer Busts! You Win!"
           }
         } else if (updatedDealer.score == 21) {
-          state.gameMessage = "Dealer Wins!"
+          state.gameMessage = `Dealer wins with ${state.dealer.score}!`
         } else if (updatedDealer.score >= 17 && updatedDealer.score < 21 && updatedDealer.score < state.player.score) {
           state.gameMessage = "You Win!"
         }
@@ -110,13 +110,23 @@ export default function manageGame(state={
       state.gameWon = true;
       console.log(dealerStay)
       if (dealerStay.score > state.player.score && dealerStay.score <= 21) {
-        state.gameMessage = "Dealer Wins!";
+        state.gameMessage = `Dealer wins with ${state.dealer.score}!`;
       } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score == state.player.score) {
         state.gameMessage = "Tie!"
       }else if (dealerStay.score >= 17 && dealerStay.score < state.player.score){
         state.gameMessage = "You win!"
       }
       return Object.assign({}, state, { dealer: dealerStay})
+    case 'CHECK_FOR_WIN':
+      var message = ""
+      if (state.dealer.score > state.player.score && state.dealer.score <= 21) {
+        message = `Dealer wins with ${state.dealer.score}!`
+      } else if (state.dealer.score >= 17 && state.dealer.score == state.player.score) {
+        message = "Tie!"
+      } else if (state.dealer.score > 21) {
+        message = "Dealer Busts!"
+      }
+      return Object.assign({}, state, { gameMessage: message})
     default:
       return state
   }

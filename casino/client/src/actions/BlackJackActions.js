@@ -19,8 +19,14 @@ export const dealerHit = (card) => {
   }
 }
 
-export const stay = (idValue) => {
+export const stay = () => {
   return{
     type: 'STAY'
+  }
+}
+
+export const checkForWin = () => {
+  return{
+    type: 'CHECK_FOR_WIN'
   }
 }

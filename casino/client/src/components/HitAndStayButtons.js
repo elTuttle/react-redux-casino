@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { playerHit, stay, dealerHit } from '../actions/BlackJackActions'
+import { playerHit, stay, dealerHit, checkForWin } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
 
 class HitAndStayButtons extends React.Component{
@@ -16,6 +16,9 @@ class HitAndStayButtons extends React.Component{
 
   handleStay = () => {
     this.props.stay();
+  }
+
+  handleDealerHit = () => {
     if (this.props.dealerScore < 17 && this.props.dealerScore < this.props.playerScore) {
       fetch('/games/' + this.props.gameId + '/hit')
       .then(results => {
@@ -27,6 +30,11 @@ class HitAndStayButtons extends React.Component{
   }
 
   render() {
+
+    if (this.props.gameWon == true && this.props.playerScore < 21) {
+      this.handleDealerHit();
+      this.props.checkForWin();
+    }
 
     if(this.props.gameStart === true && this.props.gameWon === false) {
       return (
@@ -56,7 +64,8 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     playerHit: playerHit,
     stay: stay,
-    dealerHit: dealerHit
+    dealerHit: dealerHit,
+    checkForWin: checkForWin
   }, dispatch);
 }
 
