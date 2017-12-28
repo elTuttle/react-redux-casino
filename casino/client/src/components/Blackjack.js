@@ -14,7 +14,8 @@ class Blackjack extends React.Component {
 
     this.state = {
       buttonText: 'Play',
-      gameId: null
+      gameId: null,
+      bank: 0
     }
 
   }
@@ -45,12 +46,46 @@ class Blackjack extends React.Component {
 
     }
 
+    handleWinClick = () => {
+      this.setState({
+        bank: this.state.bank + 100
+      })
+    }
+
+    handleLoseClick = () => {
+      if (this.state.bank !== 0) {
+        this.setState({
+          bank: this.state.bank - 100
+        })
+      }
+    }
+
+  /*  callApi = () => {
+      console.log('a')
+      fetch('/games') //fetch the json of a new game from api
+      .then(results => {
+        console.log('b')
+        return results.json();
+      }).then(data => {
+        console.log('c', data)
+      })
+      .catch(err => console.log('d'))
+      console.log('e')
+    } */
+
   render() {
+
+    if (true) {
+
+    }
 
     return (
       <div>
         <Center>
           <img src={require(`../cards/blackjacklogo.png`)} alt="blackjackTitle"/>
+        </Center>
+        <Center>
+          <p>Bank: ${this.state.bank}</p>
         </Center>
         <Center>
           <h3>Wins: {this.props.totalWins}  Losses: {this.props.totalLosses}</h3>

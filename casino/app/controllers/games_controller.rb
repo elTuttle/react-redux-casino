@@ -1,5 +1,10 @@
 class GamesController < ApplicationController
 
+  def index
+    @games = Game.all.limit(20)
+    render json: @games, status: 200
+  end
+
   def new
 
     player_hand = [rand(51),rand(51)] #get random numbers for player hand

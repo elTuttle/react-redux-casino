@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { playerHit, stay, dealerHit, checkForWin } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
 
+
 class HitAndStayButtons extends React.Component{
 
   handleHit = () => { //when the player hits, fetch a new card from api
@@ -15,7 +16,7 @@ class HitAndStayButtons extends React.Component{
   }
 
   handleStay = () => { //when player presses stay, run stay action
-    this.props.stay();
+    this.props.stay()
   }
 
   handleDealerHit = () => { //while dealers score is still under 17, fetch a new card from api
