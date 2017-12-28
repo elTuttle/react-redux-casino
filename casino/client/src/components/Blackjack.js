@@ -50,7 +50,7 @@ class Blackjack extends React.Component {
     return (
       <div>
         <Center>
-          <img src={require(`../cards/blackjacklogo.png`)}/>
+          <img src={require(`../cards/blackjacklogo.png`)} alt="blackjackTitle"/>
         </Center>
         <Center>
           <h3>Wins: {this.props.totalWins}  Losses: {this.props.totalLosses}</h3>

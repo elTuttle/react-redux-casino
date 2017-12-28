@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Center from 'react-center'
 import './index.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -15,7 +14,7 @@ export function configureStore(){
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}> 
+  <Provider store={store}>
     <App store={store}/>
   </Provider>, document.getElementById('root'));
 registerServiceWorker();

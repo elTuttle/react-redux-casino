@@ -32,7 +32,7 @@ class HitAndStayButtons extends React.Component{
 
   render() {
 
-    if (this.props.gameWon == true && this.props.playerScore < 21) {//if dealer or player has not one yet, hit dealer and check for win
+    if (this.props.gameWon === true && this.props.playerScore < 21) {//if dealer or player has not one yet, hit dealer and check for win
       this.handleDealerHit();
       this.props.checkForWin();
     }
