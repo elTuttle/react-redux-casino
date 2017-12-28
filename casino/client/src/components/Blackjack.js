@@ -33,9 +33,8 @@ class Blackjack extends React.Component {
 
   componentWillUnmount() {
     this.props.setToDefault();
-    fetch(`/banks/1`, {
-      method: 'put',
-      data: {value: (this.state.bank)},
+    fetch(`/banks/1/${this.state.bank}`, {
+      method: 'put'
     })
   }
 
