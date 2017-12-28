@@ -46,7 +46,7 @@ class Blackjack extends React.Component {
     return (
       <div>
         <Center>
-          <h1>Blackjack</h1>
+          <img src={require(`../cards/blackjacklogo.png`)}/>
         </Center>
         <Center>
           <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
@@ -81,7 +81,9 @@ const mapStateToProps = (state) => { //getting props from state necessary for Bl
     dealer_pngs: state.dealer.pngs,
     dealer_png_one: state.dealer.pngs[1],
     dealer_score: state.dealer.score,
-    message: state.gameMessage
+    message: state.gameMessage,
+    totalWins: state.totalWins,
+    totalLosses: state.totalLosses
   }
 };
 

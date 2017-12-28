@@ -6,7 +6,7 @@ const link = { //navbar css
   width: '100px',
   padding: '10px',
   margin: '0px 3px 3px',
-  background: 'blue',
+  background: 'red',
   textDecoration: 'none',
   color: 'white',
 }
@@ -19,10 +19,7 @@ const NavBar = () => {
       exact
       style={link}
       activeStyle={{
-        background: 'darkblue'
-      }}
-      hover={{
-        background: 'red'
+        background: 'darkred'
       }}
       >Home</NavLink>
 
@@ -31,7 +28,7 @@ const NavBar = () => {
       exact
       style={link}
       activeStyle={{
-        background: 'darkblue'
+        background: 'darkred'
       }}
       >Blackjack</NavLink>
 
@@ -40,7 +37,7 @@ const NavBar = () => {
       exact
       style={link}
       activeStyle={{
-        background: 'darkblue'
+        background: 'darkred'
       }}
       >About</NavLink>
     </div>
