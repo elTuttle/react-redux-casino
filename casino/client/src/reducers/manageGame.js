@@ -73,7 +73,7 @@ export default function manageGame(state={
           state.gameWon = true
         }
       } else if (updatedPlayer.score == 21) { //if the player get's 21, he wins
-        state.gameMessage = "21!"
+        state.gameMessage = "21! You win!"
         state.totalWins++;
         state.gameWon = true
       }
@@ -121,12 +121,15 @@ export default function manageGame(state={
         //if dealers score is greater than the players and he did not bust, the dealer wins
         gameStayMessage = `Dealer wins with ${state.dealer.score}!`;
         state.totalLosses++;
-      } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score == state.player.score) {
+      } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score === state.player.score) {
         //if the dealer score is greater than 17 and his score equals the players, the game is a tie
         gameStayMessage = "Tie!"
       }else if (dealerStay.score >= 17 && dealerStay.score < state.player.score){
         //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
         gameStayMessage = "You win!"
+        state.totalWins++;
+      }else if (dealerStay.score != 21 && state.player.score === 21) {
+        gameStayMessage = "21! You win!"
         state.totalWins++;
       }
       return Object.assign({}, state, { gameMessage: gameStayMessage, dealer: dealerStay}) //return state with updated dealer and message
