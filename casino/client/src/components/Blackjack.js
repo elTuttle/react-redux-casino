@@ -20,8 +20,23 @@ class Blackjack extends React.Component {
 
   }
 
+  componentWillMount() {
+    fetch('/banks/1')
+    .then(results => {
+      return results.json();
+    }).then(data => {
+      this.setState({
+        bank: data.value
+      })
+    })
+  }
+
   componentWillUnmount() {
     this.props.setToDefault();
+    fetch(`/banks/1`, {
+      method: 'put',
+      data: {value: (this.state.bank)},
+    })
   }
 
   handleClick = () => {

@@ -1,19 +1,16 @@
 class BanksController < ApplicationController
 
   def show
-    #find the game by id and display it's JSON
-    @game = Game.find(params[:id])
-    render json: @game, status: 201
+    @bank = Bank.find_by(id: 1)
+    if !@bank
+      @bank = Bank.create(id: 1, value: 100)
+    end
+    render json: @bank, status: 200
   end
 
-  def hit
-    @game = Game.find(params[:id]) #find game by id
-    new_card = rand(52).to_i
-    while @game.current_cards.include?(new_card) #until the new card is one not already in use, keep changing it's value
-      new_card = rand(52).to_i
-    end
-    @game.cards.build(value: new_card) #build card out of new_card value and make it belong to certain game
-    render json: new_card #render JSON of new card
+  def update
+    @bank = Bank.find(params[:id])
+    binding.pry
   end
 
 end
