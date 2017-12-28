@@ -38,6 +38,21 @@ class Blackjack extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.totalWins > prevProps.totalWins) {
+      this.setState({
+        bank: this.state.bank + 100
+      })
+    }
+    if (this.props.totalLosses > prevProps.totalLosses) {
+      if (this.state.bank !== 0) {
+        this.setState({
+          bank: this.state.bank - 100
+        })
+      }
+    }
+  }
+
   handleClick = () => {
     fetch('/games/new') //fetch the json of a new game from api
     .then(results => {
@@ -58,20 +73,6 @@ class Blackjack extends React.Component {
       this.props.newGame(game) //send new game action with the data values from json
     })
 
-    }
-
-    handleWinClick = () => {
-      this.setState({
-        bank: this.state.bank + 100
-      })
-    }
-
-    handleLoseClick = () => {
-      if (this.state.bank !== 0) {
-        this.setState({
-          bank: this.state.bank - 100
-        })
-      }
     }
 
   /*  callApi = () => {

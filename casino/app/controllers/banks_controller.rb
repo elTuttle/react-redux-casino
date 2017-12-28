@@ -10,7 +10,7 @@ class BanksController < ApplicationController
 
   def update
     @bank = Bank.find(params[:id])
-    binding.pry
+    @bank.update(value: params[:value])
   end
 
 end
