@@ -30,3 +30,9 @@ export const checkForWin = () => {
     type: 'CHECK_FOR_WIN'
   }
 }
+
+export const setToDefault = () => {
+    return{
+      type: 'SET_TO_DEFAULT'
+    }
+}

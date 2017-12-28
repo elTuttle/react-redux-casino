@@ -4,7 +4,7 @@ import HitAndStayButtons from './HitAndStayButtons'
 import GameOverMessage from './GameOverMessage'
 import Center from 'react-center'
 import { connect } from 'react-redux';
-import { newGame } from '../actions/BlackJackActions'
+import { newGame, setToDefault } from '../actions/BlackJackActions'
 import { bindActionCreators } from 'redux';
 
 class Blackjack extends React.Component {
@@ -17,6 +17,10 @@ class Blackjack extends React.Component {
       gameId: null
     }
 
+  }
+
+  componentWillUnmount() {
+    this.props.setToDefault();
   }
 
   handleClick = () => {
@@ -47,6 +51,9 @@ class Blackjack extends React.Component {
       <div>
         <Center>
           <img src={require(`../cards/blackjacklogo.png`)}/>
+        </Center>
+        <Center>
+          <h3>Wins: {this.props.totalWins}  Losses: {this.props.totalLosses}</h3>
         </Center>
         <Center>
           <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />
@@ -89,7 +96,8 @@ const mapStateToProps = (state) => { //getting props from state necessary for Bl
 
 const mapDispatchToProps = (dispatch) => { //getting dispatch actions necessary for Blackjack Component
   return bindActionCreators({
-    newGame: newGame
+    newGame: newGame,
+    setToDefault: setToDefault
   }, dispatch);
 }
 

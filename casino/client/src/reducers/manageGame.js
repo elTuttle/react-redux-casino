@@ -36,6 +36,8 @@ export default function manageGame(state={
       const newState = { //starting state for new game
         gameWon: false,
         gameStart: true,
+        totalWins: state.totalWins,
+        totalLosses: state.totalLosses,
         player: {
           hand: [action.game.player.cards[0], action.game.player.cards[1]],
           pngs: [getPngName(playerCardOne), getPngName(playerCardTwo)],
@@ -71,11 +73,13 @@ export default function manageGame(state={
           state.gameMessage = "Bust!"
           state.totalLosses++;
           state.gameWon = true
+          state.gameStart = false
         }
-      } else if (updatedPlayer.score == 21) { //if the player get's 21, he wins
+      } else if (updatedPlayer.score === 21) { //if the player get's 21, he wins
         state.gameMessage = "21! You win!"
         state.totalWins++;
         state.gameWon = true
+        state.gameStart = false
       }
       return Object.assign({}, state, { player: updatedPlayer}) //return state with updated Player
     case 'DEALER_HIT': //Dealer hits action
@@ -99,60 +103,73 @@ export default function manageGame(state={
             })
             updatedDealer.hand = dealerHand
           } else {   //if no aces and over 21, the dealer busts
-            gameMessage = "Dealer Busts! You Win!"
+            state.gameMessage = "Dealer Busts! You Win!"
             state.totalWins++;
+            state.gameStart = false
           }
-        } else if (updatedDealer.score == 21) { //if the dealer gets 21 he wins
-          gameMessage = `Dealer wins with ${state.dealer.score}!`
+        } else if (updatedDealer.score === 21) { //if the dealer gets 21 he wins
+          state.gameMessage = `Dealer wins with ${state.dealer.score}!`
           state.totalLosses++;
+          state.gameStart = false
         } else if (updatedDealer.score >= 17 && updatedDealer.score < 21 && updatedDealer.score < state.player.score) {
           //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
-          gameMessage = "You Win!"
+          state.gameMessage = "You Win!"
           state.totalWins++;
+          state.gameStart = false
         }
-        return Object.assign({}, state, { gameMessage: gameMessage, dealer: updatedDealer}) //return state with updated dealer and message
+        return Object.assign({}, state, { dealer: updatedDealer}) //return state with updated dealer and message
     case 'STAY': //player stays action
       var dealerStay = state.dealer;
 
-      var gameStayMessage = ""
       dealerStay.pngs[1] = getPngName(dealerStay.hand[1]); //reveal the dealers second card
       state.gameWon = true; //the game is over so the player can't hit or stay anymore
-      if (dealerStay.score > state.player.score && dealerStay.score <= 21) {
-        //if dealers score is greater than the players and he did not bust, the dealer wins
-        gameStayMessage = `Dealer wins with ${state.dealer.score}!`;
-        state.totalLosses++;
-      } else if (dealerStay.score >= 17 && state.player.score >= 17 && dealerStay.score === state.player.score) {
-        //if the dealer score is greater than 17 and his score equals the players, the game is a tie
-        gameStayMessage = "Tie!"
-      }else if (dealerStay.score >= 17 && dealerStay.score < state.player.score){
-        //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
-        gameStayMessage = "You win!"
-        state.totalWins++;
-      }else if (dealerStay.score != 21 && state.player.score === 21) {
-        gameStayMessage = "21! You win!"
-        state.totalWins++;
-      }
-      return Object.assign({}, state, { gameMessage: gameStayMessage, dealer: dealerStay}) //return state with updated dealer and message
+
+      return Object.assign({}, state, { dealer: dealerStay}) //return state with updated dealer and message
     case 'CHECK_FOR_WIN': //Checking for win action
-      var message = ""
-      if (state.dealer.score > state.player.score && state.dealer.score <= 21) {
+      if (state.dealer.score > state.player.score && state.dealer.score <= 21 && state.gameStart) {
         //if dealers score is greater than the players and he did not bust, the dealer wins
-        message = `Dealer wins with ${state.dealer.score}!`
+        state.gameMessage = `Dealer wins with ${state.dealer.score}!`
         state.totalLosses++;
-      } else if (state.dealer.score >= 17 && state.dealer.score == state.player.score) {
+        state.gameStart = false
+      } else if (state.dealer.score >= 17 && state.dealer.score === state.player.score && state.gameStart) {
         //if the dealer score is greater than 17 and his score equals the players, the game is a tie
-        message = "Tie!"
-      } else if (state.dealer.score > 21) {
+        state.gameMessage = "Tie!"
+        state.gameStart = false
+      } else if (state.dealer.score > 21 && state.gameStart) {
         //if the dealers score is greater than 21, he busts
-        message = "Dealer Busts!"
+        state.gameMessage = "Dealer Busts!"
         state.totalWins++;
-      } else if (state.dealer.score >= 17 && state.dealer.score < 21 && state.dealer.score < state.player.score) {
+        state.gameStart = false
+      } else if (state.dealer.score >= 17 && state.dealer.score < 21 && state.dealer.score < state.player.score && state.gameStart) {
         //if the dealers score is greater than 16 and less than 21 but is still less than the players, the player wins.
-        message = "You Win!"
+        state.gameMessage = "You Win!"
         state.totalWins++;
+        state.gameStart = false
+      } else if (state.player.score === 21 && state.dealer.score !== 21 && state.gameStart){
+        state.gameMessage = "21! You win!"
+        state.totalWins++;
+        state.gameStart = false
       }
-      //console.log(message)
-      return Object.assign({}, state, { gameMessage: message}) //return state with updated message
+      return Object.assign({}, state, { }) //return state with updated message
+    case 'SET_TO_DEFAULT':
+      state={
+        gameWon: false,
+        gameStart: false,
+        totalWins: state.totalWins,
+        totalLosses: state.totalLosses,
+        gameMessage: "",
+        player: {
+          hand: [],
+          pngs: ['red_back','red_back'],
+          score: 0
+        },
+        dealer: {
+          hand: [],
+          pngs: ['red_back','red_back'],
+          score: 0
+        }
+      }
+      return state;
     default:
       return state //if no action return state
   }
@@ -225,6 +242,8 @@ function getScoreValue(cardNumber) { //gets score value off cards position in de
       return 10;
     case 53:
       return 1;
+    default:
+      return 0;
     }
 }
 
