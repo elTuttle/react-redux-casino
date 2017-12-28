@@ -88,8 +88,6 @@ export default function manageGame(state={
         updatedDealer.pngs.push(getPngName(action.cardValue)) //add new png to png array
         updatedDealer.score += getScoreValue(action.cardValue) //add new points
 
-        var gameMessage = ""
-
         if (updatedDealer.score > 21) { // if the dealer score is greater than 21
           if (updatedDealer.hand.includes(0) || updatedDealer.hand.includes(13) || updatedDealer.hand.includes(26) || updatedDealer.hand.includes(39)) {
             //if he has an ace, and his score is over 21, change it from 11 points to 1
@@ -145,8 +143,12 @@ export default function manageGame(state={
         state.gameMessage = "You Win!"
         state.totalWins++;
         state.gameStart = false
-      } else if (state.player.score === 21 && state.dealer.score !== 21 && state.gameStart){
+      } else if (state.player.score === 21 && state.dealer.score !== 21){
         state.gameMessage = "21! You win!"
+        state.totalWins++;
+        state.gameStart = false
+      } else if (state.player.score === 21 && state.dealer.score === 21){
+        state.gameMessage = "Tie at 21! What a shame!"
         state.totalWins++;
         state.gameStart = false
       }
