@@ -15,12 +15,13 @@ class Blackjack extends React.Component {
     this.state = {
       buttonText: 'Play',
       gameId: null,
-      bank: 0
+      bank: 0,
+      bankColor: 'green'
     }
 
   }
 
-  componentWillMount() {
+  componentWillMount() {//when the component is created, send get request for bank
     fetch('/banks/1')
     .then(results => {
       return results.json();
@@ -33,24 +34,29 @@ class Blackjack extends React.Component {
 
   componentWillUnmount() {
     this.props.setToDefault();
-    fetch(`/banks/1/${this.state.bank}`, {
-      method: 'put'
-    })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {//if wins and losses changes, update bank and post to database
     if (this.props.totalWins > prevProps.totalWins) {
       this.setState({
-        bank: this.state.bank + 100
+        bank: this.state.bank + 100,
+        bankColor: 'green'
       })
     }
     if (this.props.totalLosses > prevProps.totalLosses) {
       if (this.state.bank !== 0) {
         this.setState({
-          bank: this.state.bank - 100
+          bank: this.state.bank - 100,
+        })
+      } else {
+        this.setState({
+          bankColor: 'red'
         })
       }
     }
+    fetch(`/banks/1/${this.state.bank}`, {
+      method: 'put'
+    })
   }
 
   handleClick = () => {
@@ -99,11 +105,12 @@ class Blackjack extends React.Component {
         <Center>
           <img src={require(`../cards/blackjacklogo.png`)} alt="blackjackTitle"/>
         </Center>
-        <Center>
-          <p>Bank: ${this.state.bank}</p>
-        </Center>
+
         <Center>
           <h3>Wins: {this.props.totalWins}  Losses: {this.props.totalLosses}</h3>
+        </Center>
+        <Center>
+          <p>Bank: <strong style={{color: this.state.bankColor}}>${this.state.bank}</strong></p>
         </Center>
         <Center>
           <button onClick={this.handleClick} width="50" height="50">{this.state.buttonText}</button><br /><br />

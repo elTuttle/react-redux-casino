@@ -49,6 +49,12 @@ export default function manageGame(state={
           score: dealerScore
         }
       }
+      if (newState.player.score === 21) { //if the player get's 21, he wins
+        newState.gameMessage = "21! You win!"
+        newState.totalWins++;
+        newState.gameWon = true
+        newState.gameStart = false
+      }
       return newState //return new state
 
     case 'PLAYER_HIT': //player hit action
